@@ -30,29 +30,27 @@ Below is a breakdown of the tools available:
 ---
 
 
+---
+
 ### 🚀 Getting Started
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/The-Vault.git
-    cd The-Vault
-    ```
-2.  **Install Dependencies:**
-    Most scripts rely on common libraries in the generative AI space. Ensure you have them installed, typically:
-    ```bash
-    pip install torch torchvision torchaudio safetensors diffusers transformers accelerate huggingface_hub
-    ```
-    *Note: A `requirements.txt` file may be added in the future for easier dependency management.*
+You don’t need to clone the whole Vault — unless you want to.
 
-3.  **Using the Tools:**
-    *   Navigate to the directory containing the script you want to use.
-    *   **Important:** Most scripts currently have hardcoded file paths (e.g., `lora_path`, `checkpoint_path`, `output_directory`, `model_directory`) and configuration (e.g., `your_username`, `repo_name`). You will need to **open the Python script and modify these parameters** to point to your local files and set your configurations.
-    *   **For Hugging Face Uploads:** Ensure you are logged in to Hugging Face. If you haven't already, run `huggingface-cli login` in your terminal and follow the prompts.
-    *   Run the script from your terminal:
-        ```bash
-        python script_name.py
-        ```
-    *   Follow any on-screen prompts or observe the output.
+Each tool lives in its own folder and comes with its own README, usage instructions, and (where applicable) dependencies. Just browse to the tool you need and follow the instructions there.
+
+If you do want to download the whole thing:
+
+```bash
+git clone https://github.com/your-username/The-Vault.git
+cd The-Vault
+```
+
+### 📦 Dependencies
+
+Most scripts use libraries commonly found in the generative AI ecosystem, such as:
+
+```bash
+pip install torch torchvision torchaudio safetensors diffusers transf
 
 ---
 
