@@ -66,3 +66,63 @@ Navigate to the directory containing `HubShuttle.py` and run it from your termin
 
 ```bash
 python HubShuttle.py --model_dir "/path/to/your/model_diffusers" --hf_username "YourHFUsername" --repo_name "MyAwesomeModel"
+```
+
+### Example for Windows (CMD/PowerShell)
+
+```bat
+python HubShuttle.py ^
+  --model_dir "C:\path\to\your\model_diffusers" ^
+  --hf_username "YourHFUsername" ^
+  --repo_name "MyAwesomeModel" ^
+  --commit_message "Initial upload of MyAwesomeModel" ^
+  --private
+```
+
+### Example for Linux/macOS (bash/zsh)
+
+```bash
+python3 HubShuttle.py \
+  --model_dir "/path/to/your/model_diffusers" \
+  --hf_username "YourHFUsername" \
+  --repo_name "MyAwesomeModel" \
+  --commit_message "Initial upload of MyAwesomeModel" \
+  --private
+```
+
+---
+
+### Command-Line Arguments
+
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `--model_dir` | ✅ | Path to the local directory containing your Diffusers model files. |
+| `--hf_username` | ✅ | Your Hugging Face Hub username. |
+| `--repo_name` | ✅ | The desired name for your model repository on the Hugging Face Hub (e.g., 'MyCoolModel-v1'). |
+| `--commit_message` | ❌ | The commit message for the upload. <br>**Default:** `"Upload model using HubShuttle"` |
+| `--private` | ❌ | If present, makes the repository private on Hugging Face Hub. <br>**Default:** Public |
+| `--ignore_patterns` | ❌ | Glob patterns for files/folders to ignore during upload (e.g., `'*.txt' '*.log'`). Can specify multiple. <br>**Default:** `['*.py', '__pycache__/*']` |
+| `--repo_type` | ❌ | Type of the repository on Hugging Face Hub. <br>**Choices:** `model`, `dataset`, `space` <br>**Default:** `model` |
+| `--use_fast_transfer` | ❌ | Use experimental fast transfer. May require specific `git-lfs` versions. <br>**Default:** Disabled |
+
+To see all available options and their descriptions, run:
+
+```bash
+python HubShuttle.py --help
+```
+
+or
+
+```bash
+python3 HubShuttle.py --help
+```
+
+> **Use code with caution.**
+
+---
+
+## 💡 Notes
+
+- Ensure your internet connection is stable during the upload, especially for large models.
+- The `upload_folder` function from `huggingface_hub` is robust and handles Git LFS for large files, which is critical for model checkpoints.
+- Always double-check your paths and usernames before running the script.
