@@ -47,43 +47,36 @@ cd The-Vault
 
 ### 📦 Dependencies
 
-Most scripts use libraries commonly found in the generative AI ecosystem, such as:
+Most tools rely on commonly used libraries in the generative AI ecosystem. If you're unsure what you need, this basic install will cover 90% of use cases:
 
 ```bash
-pip install torch torchvision torchaudio safetensors diffusers transf
+pip install torch torchvision torchaudio safetensors diffusers transformers accelerate huggingface_hub
+```
+
+Check each tool’s folder or README for any additional or optional dependencies.
 
 ---
 
 ### 🔮 Future Plans
 
-This vault is far from full! I plan to add more tools, including but not limited to:
+This vault is just getting started. Planned additions include:
 
-*   More advanced model and LoRA analysis tools.
-*   Batch processing utilities for common tasks.
-*   Helpers for dataset preparation or augmentation.
-*   Scripts for comparing model outputs or embeddings.
-*   User-friendly interfaces or wrappers for existing CLI tools (e.g., using `argparse` for command-line arguments instead of hardcoded paths).
+- Advanced model and LoRA analysis tools.
+- Batch processing utilities for repetitive tasks.
+- Helpers for dataset preparation and augmentation.
+- Scripts for comparing model outputs or embeddings.
+- User-friendly wrappers using `argparse` to replace hardcoded configs.
 
-Your suggestions for new tools are highly encouraged! Feel free to open an issue to suggest a new feature or tool.
+Got an idea? Open an issue and let me know!
 
 ---
 
 ### 🤝 Contributing (Suggestions & Feedback)
 
-While this is primarily a personal project, I'm open to suggestions, feedback, and identifying bugs. Please feel free to:
+While The-Vault is primarily a personal project, suggestions and feedback are always welcome.
 
-*   **Open an Issue:** If you find a bug, have a feature request, or a suggestion for a new tool.
-*   **Provide Feedback:** Let me know if these tools are helpful for your workflows!
-
----
-
-### 📜 License
-
-The tools in this repository are provided **free for personal use**.
-
-Please note: While the scripts are provided for personal use, the underlying libraries (`torch`, `diffusers`, `safetensors`, `huggingface_hub`, etc.) are subject to their own licenses.
+- **Found a bug?** Open an issue.
+- **Have an idea for a new tool?** Open an issue.
+- **Find this useful?** Let me know — it helps guide future tools and features.
 
 ---
-
-Happy generating!
-raxep (Your GitHub Username/Name)
