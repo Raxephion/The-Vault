@@ -16,13 +16,13 @@ Then, you can run the script providing the necessary arguments.
 
 import os
 import argparse
-from huggingface_hub import create_repo, HfApi, upload_folder # Added HfApi for more robust repo creation check
+from huggingface_hub import create_repo, HfApi, upload_folder
 from huggingface_hub.utils import HfHubHTTPError
 
 def main():
     parser = argparse.ArgumentParser(
         description="HubShuttle: Upload Diffusers models to Hugging Face Hub.",
-        formatter_class=argparse.RawTextHelpFormatter, # Allows for better formatting of help text
+        formatter_class=argparse.RawTextHelpFormatter,
         epilog="""
 Example usage:
   python HubShuttle.py ^
@@ -38,58 +38,17 @@ Ensure you have run 'huggingface-cli login' before using this script.
 """
     )
 
-    parser.add_argument(
-        "--model_dir",
-        type=str,
-        required=True,
-        help="Path to the local directory containing your Diffusers model files."
-    )
-    parser.add_argument(
-        "--hf_username",
-        type=str,
-        required=True,
-        help="Your Hugging Face Hub username."
-    )
-    parser.add_argument(
-        "--repo_name",
-        type=str,
-        required=True,
-        help="The desired name for your model repository on the Hugging Face Hub (e.g., 'MyCoolModel-v1')."
-    )
-    parser.add_argument(
-        "--commit_message",
-        type=str,
-        default="Upload model using HubShuttle",
-        help="The commit message for the upload (default: 'Upload model using HubShuttle')."
-    )
-    parser.add_argument(
-        "--private",
-        action="store_true", # Makes this a flag; if present, private=True
-        help="Make the repository private on Hugging Face Hub (default: public)."
-    )
-    parser.add_argument(
-        "--ignore_patterns",
-        type=str,
-        nargs='*', # Allows for multiple ignore patterns
-        default=["*.py", "__pycache__/*"], # Sensible defaults
-        help="Glob patterns for files/folders to ignore during upload (e.g., '*.txt' '*.log'). Default: '*.py' '__pycache__/*'."
-    )
-    parser.add_argument(
-        "--repo_type",
-        type=str,
-        default="model",
-        choices=["model", "dataset", "space"],
-        help="Type of the repository on Hugging Face Hub (default: 'model')."
-    )
-    parser.add_argument(
-        "--use_fast_transfer",
-        action="store_true",
-        help="Use experimental fast transfer with huggingface_hub<0.22 and git-lfs>=2.5.0 (default: False)."
-    )
+    parser.add_argument("--model_dir", type=str, required=True, help="Path to the local directory containing your Diffusers model files.")
+    parser.add_argument("--hf_username", type=str, required=True, help="Your Hugging Face Hub username.")
+    parser.add_argument("--repo_name", type=str, required=True, help="The name for your model repository on the Hugging Face Hub.")
+    parser.add_argument("--commit_message", type=str, default="Upload model using HubShuttle", help="The commit message for the upload.")
+    parser.add_argument("--private", action="store_true", help="Make the repository private (default is public).")
+    parser.add_argument("--ignore_patterns", type=str, nargs='*', default=["*.py", "__pycache__/*"], help="Patterns to ignore during upload.")
+    parser.add_argument("--repo_type", type=str, default="model", choices=["model", "dataset", "space"], help="Type of Hugging Face repo.")
+    parser.add_argument("--use_fast_transfer", action="store_true", help="Enable experimental fast transfer (optional).")
 
     args = parser.parse_args()
 
-    # Construct repository ID
     repo_id = f"{args.hf_username}/{args.repo_name}"
 
     print("--- HubShuttle: Diffusers Model Uploader ---")
@@ -102,37 +61,24 @@ Ensure you have run 'huggingface-cli login' before using this script.
         print("ℹ️  Fast transfer enabled.")
     print("-" * 40)
 
-    # Validate model directory
     if not os.path.isdir(args.model_dir):
-        print(f"❌ Error: Model directory not found at '{args.model_dir}'. Please check the path.")
-        return # Exit if directory doesn't exist
+        print(f"❌ Error: Model directory not found at '{args.model_dir}'.")
+        return
 
-    # --- Repository Creation ---
     api = HfApi()
     try:
-        print(f"⏳ Attempting to create or access repository: {repo_id}...")
-        # create_repo will not error if repo exists and exist_ok=True
-        create_repo(
-            repo_id,
-            repo_type=args.repo_type,
-            private=args.private,
-            exist_ok=True
-        )
+        print(f"⏳ Creating or accessing repository: {repo_id}...")
+        create_repo(repo_id, repo_type=args.repo_type, private=args.private, exist_ok=True)
         print(f"✅ Repository '{repo_id}' is ready.")
     except HfHubHTTPError as e:
-        # Catch specific HTTP errors, e.g., 401 Unauthorized
-        print(f"❌ HTTP Error creating/accessing repository '{repo_id}': {e}")
-        print("   Please ensure:")
-        print("     1. You are logged in ('huggingface-cli login').")
-        print("     2. Your token has the necessary write permissions.")
-        print(f"     3. The username '{args.hf_username}' is correct.")
+        print(f"❌ HTTP Error: {e}")
+        print("   Ensure you're logged in and your token has write access.")
         return
     except Exception as e:
-        print(f"❌ An unexpected error occurred while preparing the repository '{repo_id}': {e}")
+        print(f"❌ Unexpected error: {e}")
         return
 
-    # --- Folder Upload ---
-    print(f"⏳ Uploading folder '{args.model_dir}' to '{repo_id}'...")
+    print(f"⏳ Uploading '{args.model_dir}' to Hugging Face Hub...")
     try:
         upload_folder(
             folder_path=args.model_dir,
@@ -140,21 +86,14 @@ Ensure you have run 'huggingface-cli login' before using this script.
             repo_type=args.repo_type,
             commit_message=args.commit_message,
             ignore_patterns=args.ignore_patterns,
-            # use_fast_transfer=args.use_fast_transfer, # As of huggingface_hub 0.22, this is handled internally
         )
         print("✅ Upload complete!")
-        print(f"🎉 Your model is now available at: https://huggingface.co/{repo_id}")
+        print(f"🎉 Your model is now live at: https://huggingface.co/{repo_id}")
     except FileNotFoundError:
-        print(f"❌ Error: The folder_path '{args.model_dir}' was not found during the upload attempt.")
-        print("   This can happen if the path was valid initially but became invalid, or an internal issue.")
+        print(f"❌ Error: The folder '{args.model_dir}' was not found.")
     except Exception as e:
-        print(f"❌ An error occurred during upload: {e}")
-        print("   Please check:")
-        print("     - Your internet connection.")
-        print("     - Permissions for the repository on Hugging Face Hub.")
-        print("     - If files are very large, ensure Git LFS is working correctly on your system.")
-        # if not args.use_fast_transfer:
-        # print("     - You might want to try the --use_fast_transfer flag if you haven't.")
+        print(f"❌ Upload failed: {e}")
+        print("   Check your internet, repo permissions, or Git LFS setup.")
 
 if __name__ == "__main__":
     main()
