@@ -64,4 +64,4 @@ pip install -r requirements.txt
 
 ## 🛠️ Part of The Vault
 
-A suite of powerful tools for Stable Diffusion tinkerers, builders, and chaos agents.
+A suite of powerful tools for Generative AI tinkerers, builders, and chaos agents.
