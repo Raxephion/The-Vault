@@ -13,23 +13,6 @@ The-Vault currently contains:
 - **HubShuttle**: A simple script to upload your Hugging Face Diffusers models to the Hugging Face Hub in one command. Handles repo creation, file upload, ignore patterns, and optional privacy — no coding required.
 
 
-Below is a breakdown of the tools available:
-
----
-
-### 🛠️ Current Tools
-
-#### 1. HubShuttle (`hubshuttle.py`)
-   * **What it does:** Uploads a local Hugging Face Diffusers model to the Hugging Face Hub in one go.
-   * **How it works:**
-     1. Accepts arguments like your model directory, repo name, username, and commit message via command line.
-     2. Creates a new repo on Hugging Face Hub (or reuses one if it already exists).
-     3. Uploads your model files with optional ignore patterns and privacy settings.
-   * **Use Case:** Great for creators who want to share or back up their models without messing around with git or the web UI — just run the script and you're done.
-
----
-
-
 ---
 
 ### 🚀 Getting Started
