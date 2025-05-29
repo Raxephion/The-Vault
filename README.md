@@ -6,13 +6,6 @@ These tools are developed to be simple, effective, and are available **free for 
 
 This is an **ongoing project**, and I will be adding more tools and refining existing ones as I develop them. Your feedback and suggestions are welcome!
 
-🌟 What's Inside?
-
-The-Vault currently contains:
-
-- **HubShuttle**: A simple script to upload your Hugging Face Diffusers models to the Hugging Face Hub in one command. Handles repo creation, file upload, ignore patterns, and optional privacy — no coding required.
-
-
 ---
 
 ### 🚀 Getting Started
